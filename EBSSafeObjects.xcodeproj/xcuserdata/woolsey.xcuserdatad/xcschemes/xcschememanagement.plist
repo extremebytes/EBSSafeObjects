@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Demo.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>EBSSafeObjects.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,16 @@
 			<true/>
 		</dict>
 		<key>456D4AF91A6C482100E68186</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>456D4B0D1A6C488F00E68186</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>456D4B251A6C488F00E68186</key>
 		<dict>
 			<key>primary</key>
 			<true/>
