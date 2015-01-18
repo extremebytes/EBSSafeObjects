@@ -1,13 +1,13 @@
 //
-//  SafeObjects.h
+//  EBSSafeObjects.m
 //  EBSSafeObjects
 //
 //  Created by John Woolsey on 1/18/15.
 //  Copyright (c) 2015 ExtremeBytes Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "EBSSafeObjects.h"
 
-@interface SafeObjects : NSObject
+@implementation EBSSafeObjects
 
 @end

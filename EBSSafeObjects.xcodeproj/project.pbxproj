@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45565C3E1A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */; };
+		45565C3F1A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */; };
+		45565C401A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */; };
+		45565C411A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */; };
 		456D4B011A6C482200E68186 /* EBSSafeObjectsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 456D4B001A6C482200E68186 /* EBSSafeObjectsTests.m */; };
 		456D4B131A6C488F00E68186 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 456D4B121A6C488F00E68186 /* main.m */; };
 		456D4B161A6C488F00E68186 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 456D4B151A6C488F00E68186 /* AppDelegate.m */; };
@@ -15,10 +19,6 @@
 		456D4B1E1A6C488F00E68186 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 456D4B1D1A6C488F00E68186 /* Images.xcassets */; };
 		456D4B211A6C488F00E68186 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 456D4B1F1A6C488F00E68186 /* LaunchScreen.xib */; };
 		456D4B2D1A6C488F00E68186 /* DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 456D4B2C1A6C488F00E68186 /* DemoTests.m */; };
-		456D4B371A6C49E200E68186 /* SafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 456D4B361A6C49E200E68186 /* SafeObjects.m */; };
-		456D4B381A6C49E200E68186 /* SafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 456D4B361A6C49E200E68186 /* SafeObjects.m */; };
-		456D4B391A6C49E200E68186 /* SafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 456D4B361A6C49E200E68186 /* SafeObjects.m */; };
-		456D4B3A1A6C49E200E68186 /* SafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 456D4B361A6C49E200E68186 /* SafeObjects.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		45565C3C1A6C4E0B00231BBA /* EBSSafeObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBSSafeObjects.h; path = EBSSafeObjects/EBSSafeObjects.h; sourceTree = "<group>"; };
+		45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBSSafeObjects.m; path = EBSSafeObjects/EBSSafeObjects.m; sourceTree = "<group>"; };
 		456D4AE11A6C482100E68186 /* EBSSafeObjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EBSSafeObjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		456D4AFA1A6C482100E68186 /* EBSSafeObjectsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EBSSafeObjectsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		456D4AFF1A6C482200E68186 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,8 +58,6 @@
 		456D4B261A6C488F00E68186 /* DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		456D4B2B1A6C488F00E68186 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		456D4B2C1A6C488F00E68186 /* DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoTests.m; sourceTree = "<group>"; };
-		456D4B351A6C49E200E68186 /* SafeObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SafeObjects.h; path = EBSSafeObjects/SafeObjects.h; sourceTree = "<group>"; };
-		456D4B361A6C49E200E68186 /* SafeObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SafeObjects.m; path = EBSSafeObjects/SafeObjects.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,8 +175,8 @@
 		456D4B341A6C494300E68186 /* EBSSafeObjects */ = {
 			isa = PBXGroup;
 			children = (
-				456D4B351A6C49E200E68186 /* SafeObjects.h */,
-				456D4B361A6C49E200E68186 /* SafeObjects.m */,
+				45565C3C1A6C4E0B00231BBA /* EBSSafeObjects.h */,
+				45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */,
 			);
 			name = EBSSafeObjects;
 			sourceTree = "<group>";
@@ -339,7 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				456D4B371A6C49E200E68186 /* SafeObjects.m in Sources */,
+				45565C3E1A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,8 +347,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45565C3F1A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */,
 				456D4B011A6C482200E68186 /* EBSSafeObjectsTests.m in Sources */,
-				456D4B381A6C49E200E68186 /* SafeObjects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,9 +357,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				456D4B191A6C488F00E68186 /* ViewController.m in Sources */,
-				456D4B391A6C49E200E68186 /* SafeObjects.m in Sources */,
 				456D4B161A6C488F00E68186 /* AppDelegate.m in Sources */,
 				456D4B131A6C488F00E68186 /* main.m in Sources */,
+				45565C401A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,8 +367,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45565C411A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */,
 				456D4B2D1A6C488F00E68186 /* DemoTests.m in Sources */,
-				456D4B3A1A6C49E200E68186 /* SafeObjects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +614,7 @@
 				456D4B061A6C482200E68186 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		456D4B071A6C482200E68186 /* Build configuration list for PBXNativeTarget "EBSSafeObjectsTests" */ = {
 			isa = XCConfigurationList;
@@ -622,6 +623,7 @@
 				456D4B091A6C482200E68186 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		456D4B2E1A6C488F00E68186 /* Build configuration list for PBXNativeTarget "Demo" */ = {
 			isa = XCConfigurationList;
@@ -630,6 +632,7 @@
 				456D4B301A6C488F00E68186 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		456D4B311A6C488F00E68186 /* Build configuration list for PBXNativeTarget "DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -638,6 +641,7 @@
 				456D4B331A6C488F00E68186 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
