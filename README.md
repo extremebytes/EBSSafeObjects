@@ -9,7 +9,7 @@ Although this library is useful on its own, the primary purpose for this project
 + (BOOL)isSafeObject:(id)object
 + (BOOL)isObject:(id)object safeKindOfClass:(Class)class
 ```
-### Non Empty Class Checks
+### Non Empty Checks
 ```
 + (BOOL)isSafeNonEmptyArray:(id)object
 + (BOOL)isSafeNonEmptyDictionary:(id)object
