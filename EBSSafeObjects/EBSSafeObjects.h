@@ -6,7 +6,9 @@
 //  Copyright (c) 2015 ExtremeBytes Software. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
+
 
 @interface EBSSafeObjects : NSObject
 

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45565C3E1A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */; };
 		45565C3F1A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */; };
 		45565C401A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */; };
 		45565C411A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */; };
@@ -22,13 +21,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		456D4AFB1A6C482100E68186 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 456D4AD91A6C482100E68186 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 456D4AE01A6C482100E68186;
-			remoteInfo = EBSSafeObjects;
-		};
 		456D4B271A6C488F00E68186 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 456D4AD91A6C482100E68186 /* Project object */;
@@ -41,7 +33,6 @@
 /* Begin PBXFileReference section */
 		45565C3C1A6C4E0B00231BBA /* EBSSafeObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBSSafeObjects.h; path = EBSSafeObjects/EBSSafeObjects.h; sourceTree = "<group>"; };
 		45565C3D1A6C4E0B00231BBA /* EBSSafeObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBSSafeObjects.m; path = EBSSafeObjects/EBSSafeObjects.m; sourceTree = "<group>"; };
-		456D4AE11A6C482100E68186 /* EBSSafeObjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EBSSafeObjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		456D4AFA1A6C482100E68186 /* EBSSafeObjectsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EBSSafeObjectsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		456D4AFF1A6C482200E68186 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		456D4B001A6C482200E68186 /* EBSSafeObjectsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EBSSafeObjectsTests.m; sourceTree = "<group>"; };
@@ -61,13 +52,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		456D4ADE1A6C482100E68186 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		456D4AF71A6C482100E68186 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -106,7 +90,6 @@
 		456D4AE21A6C482100E68186 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				456D4AE11A6C482100E68186 /* EBSSafeObjects.app */,
 				456D4AFA1A6C482100E68186 /* EBSSafeObjectsTests.xctest */,
 				456D4B0E1A6C488F00E68186 /* Demo.app */,
 				456D4B261A6C488F00E68186 /* DemoTests.xctest */,
@@ -184,23 +167,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		456D4AE01A6C482100E68186 /* EBSSafeObjects */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 456D4B041A6C482200E68186 /* Build configuration list for PBXNativeTarget "EBSSafeObjects" */;
-			buildPhases = (
-				456D4ADD1A6C482100E68186 /* Sources */,
-				456D4ADE1A6C482100E68186 /* Frameworks */,
-				456D4ADF1A6C482100E68186 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = EBSSafeObjects;
-			productName = EBSSafeObjects;
-			productReference = 456D4AE11A6C482100E68186 /* EBSSafeObjects.app */;
-			productType = "com.apple.product-type.application";
-		};
 		456D4AF91A6C482100E68186 /* EBSSafeObjectsTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 456D4B071A6C482200E68186 /* Build configuration list for PBXNativeTarget "EBSSafeObjectsTests" */;
@@ -212,7 +178,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				456D4AFC1A6C482100E68186 /* PBXTargetDependency */,
 			);
 			name = EBSSafeObjectsTests;
 			productName = EBSSafeObjectsTests;
@@ -263,12 +228,8 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "ExtremeBytes Software";
 				TargetAttributes = {
-					456D4AE01A6C482100E68186 = {
-						CreatedOnToolsVersion = 6.1.1;
-					};
 					456D4AF91A6C482100E68186 = {
 						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 456D4AE01A6C482100E68186;
 					};
 					456D4B0D1A6C488F00E68186 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -292,7 +253,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				456D4AE01A6C482100E68186 /* EBSSafeObjects */,
 				456D4AF91A6C482100E68186 /* EBSSafeObjectsTests */,
 				456D4B0D1A6C488F00E68186 /* Demo */,
 				456D4B251A6C488F00E68186 /* DemoTests */,
@@ -301,13 +261,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		456D4ADF1A6C482100E68186 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		456D4AF81A6C482100E68186 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -335,14 +288,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		456D4ADD1A6C482100E68186 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				45565C3E1A6C4E0B00231BBA /* EBSSafeObjects.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		456D4AF61A6C482100E68186 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -375,11 +320,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		456D4AFC1A6C482100E68186 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 456D4AE01A6C482100E68186 /* EBSSafeObjects */;
-			targetProxy = 456D4AFB1A6C482100E68186 /* PBXContainerItemProxy */;
-		};
 		456D4B281A6C488F00E68186 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 456D4B0D1A6C488F00E68186 /* Demo */;
@@ -483,30 +423,9 @@
 			};
 			name = Release;
 		};
-		456D4B051A6C482200E68186 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = EBSSafeObjects/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		456D4B061A6C482200E68186 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = EBSSafeObjects/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		456D4B081A6C482200E68186 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -518,14 +437,12 @@
 				INFOPLIST_FILE = EBSSafeObjectsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EBSSafeObjects.app/EBSSafeObjects";
 			};
 			name = Debug;
 		};
 		456D4B091A6C482200E68186 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -533,7 +450,6 @@
 				INFOPLIST_FILE = EBSSafeObjectsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EBSSafeObjects.app/EBSSafeObjects";
 			};
 			name = Release;
 		};
@@ -603,15 +519,6 @@
 			buildConfigurations = (
 				456D4B021A6C482200E68186 /* Debug */,
 				456D4B031A6C482200E68186 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		456D4B041A6C482200E68186 /* Build configuration list for PBXNativeTarget "EBSSafeObjects" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				456D4B051A6C482200E68186 /* Debug */,
-				456D4B061A6C482200E68186 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
