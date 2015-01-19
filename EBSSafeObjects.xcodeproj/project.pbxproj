@@ -49,6 +49,8 @@
 		456D4B261A6C488F00E68186 /* DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		456D4B2B1A6C488F00E68186 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		456D4B2C1A6C488F00E68186 /* DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoTests.m; sourceTree = "<group>"; };
+		45E249B51A6D58F900E61915 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		45E249B61A6D590A00E61915 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,8 @@
 		456D4AD81A6C482100E68186 = {
 			isa = PBXGroup;
 			children = (
+				45E249B61A6D590A00E61915 /* README.md */,
+				45E249B51A6D58F900E61915 /* LICENSE */,
 				456D4B341A6C494300E68186 /* EBSSafeObjects */,
 				456D4AFD1A6C482100E68186 /* EBSSafeObjectsTests */,
 				456D4B0F1A6C488F00E68186 /* Demo */,
