@@ -41,7 +41,7 @@
 }
 
 
-#pragma mark - Non Empty Class Checks
+#pragma mark - Non Empty Checks
 
 /**
  *  Tests if an object is a safe non empty array.
