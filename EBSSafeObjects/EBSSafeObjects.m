@@ -57,6 +57,21 @@
 
 
 /**
+ *  Tests if an object is a safe non empty date.
+ *
+ *  Note: Empty dates are initialized to the current date and time.
+ *
+ *  @param object The object under test.
+ *
+ *  @return YES, if the object is a safe non empty date, otherwise NO.
+ */
++ (BOOL)isSafeNonEmptyDate:(id)object
+{
+   return ([self isObject:object safeKindOfClass:[NSDate class]]) ? YES : NO;
+}
+
+
+/**
  *  Tests if an object is a safe non empty dictionary.
  *
  *  @param object The object under test.
@@ -111,6 +126,24 @@
 {
    if ([self isObject:firstObject safeKindOfClass:[NSArray class]] && [self isObject:secondObject safeKindOfClass:[NSArray class]]) {
       return [firstObject isEqualToArray:secondObject];
+   } else {
+      return NO;
+   }
+}
+
+
+/**
+ *  Tests if two objects are safe and equal dates.
+ *
+ *  @param firstObject  The first object to compare.
+ *  @param secondObject The second object to compare.
+ *
+ *  @return YES, if both objects are safe dates that are equal to each other, otherwise NO.
+ */
++ (BOOL)isDate:(id)firstObject safeEqualToDate:(id)secondObject
+{
+   if ([self isObject:firstObject safeKindOfClass:[NSDate class]] && [self isObject:secondObject safeKindOfClass:[NSDate class]]) {
+      return [firstObject isEqualToDate:secondObject];
    } else {
       return NO;
    }
@@ -185,6 +218,24 @@
 {
    if ([self isSafeNonEmptyArray:firstObject] && [self isSafeNonEmptyArray:secondObject]) {
       return [firstObject isEqualToArray:secondObject];
+   } else {
+      return NO;
+   }
+}
+
+
+/**
+ *  Tests if two objects are safe, non empty, and equal dates.
+ *
+ *  @param firstObject  The first object to compare.
+ *  @param secondObject The second object to compare.
+ *
+ *  @return YES, if both objects are safe non empty dates that are equal to each other, otherwise NO.
+ */
++ (BOOL)isDate:(id)firstObject safeNonEmptyEqualToDate:(id)secondObject
+{
+   if ([self isSafeNonEmptyDate:firstObject] && [self isSafeNonEmptyDate:secondObject]) {
+      return [firstObject isEqualToDate:secondObject];
    } else {
       return NO;
    }

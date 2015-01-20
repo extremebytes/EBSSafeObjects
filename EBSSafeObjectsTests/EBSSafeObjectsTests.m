@@ -30,6 +30,14 @@
 @property (strong, nonatomic) NSArray *anotherRealDifferentArray;
 @property (strong, nonatomic) NSArray *anotherRealEqualArray;
 
+// Dates
+@property (strong, nonatomic) NSDate *nilDate;
+@property (strong, nonatomic) NSDate *nullDate;
+@property (strong, nonatomic) NSDate *emptyDate;
+@property (strong, nonatomic) NSDate *realDate;
+@property (strong, nonatomic) NSDate *anotherRealDifferentDate;
+@property (strong, nonatomic) NSDate *anotherRealEqualDate;
+
 // Dictionaries
 @property (strong, nonatomic) NSDictionary *nilDictionary;
 @property (strong, nonatomic) NSDictionary *nullDictionary;
@@ -59,9 +67,15 @@
 
 @implementation EBSSafeObjectsTests
 
+#pragma mark - Testing Lifecycle
+
+/**
+ *  Sets up objects for use during testing.
+ *
+ *  Note: This method is called before the invocation of each test method in the class.
+ */
 - (void)setUp {
    [super setUp];
-   // Put setup code here. This method is called before the invocation of each test method in the class.
    
    // Objects
    self.nilObject = nil;
@@ -73,23 +87,31 @@
    
    // Arrays
    self.nilArray = nil;
-   self.nullArray = [NSNull null];
-   self.emptyArray = [NSArray array];
+   self.nullArray = (NSArray *)[NSNull null];
+   self.emptyArray = [[NSArray alloc] init];
    self.realArray = @[@"array"];
    self.anotherRealDifferentArray = @[@"another array"];
    self.anotherRealEqualArray = @[@"array"];
    
+   // Dates
+   self.nilDate = nil;
+   self.nullDate = (NSDate *)[NSNull null];
+   self.emptyDate = [[NSDate alloc] init];  // empty dates are initialized to current date and time
+   self.realDate = [NSDate dateWithTimeIntervalSinceNow:60];
+   self.anotherRealDifferentDate = [NSDate distantFuture];
+   self.anotherRealEqualDate = [self.realDate dateByAddingTimeInterval:0];
+   
    // Dictionaries
    self.nilDictionary = nil;
-   self.nullDictionary = [NSNull null];
-   self.emptyDictionary = [NSDictionary dictionary];
+   self.nullDictionary = (NSDictionary *)[NSNull null];
+   self.emptyDictionary = [[NSDictionary alloc] init];
    self.realDictionary = @{@"dictionary":@"dictionary"};
    self.anotherRealDifferentDictionary = @{@"another dictionary":@"another dictionary"};
    self.anotherRealEqualDictionary = @{@"dictionary":@"dictionary"};
    
    // Numbers
    self.nilNumber = nil;
-   self.nullNumber = [NSNull null];
+   self.nullNumber = (NSNumber *)[NSNull null];
    self.emptyNumber = [[NSNumber alloc] init];  // considered a nil value
    self.realNumber = @5;
    self.anotherRealDifferentNumber = @10;
@@ -97,13 +119,26 @@
    
    // Strings
    self.nilString = nil;
-   self.nullString = [NSNull null];
-   self.emptyString = @"";
+   self.nullString = (NSString *)[NSNull null];
+   self.emptyString = [[NSString alloc] init];
    self.realString = @"string";
    self.anotherRealDifferentString = @"another string";
    self.anotherRealEqualString = @"string";
 }
 
+
+/**
+ *  Tears down objects used during testing.
+ *
+ *  Note: This method is called after the invocation of each test method in the class.
+ */
+- (void)tearDown {
+   // Put teardown code here.
+   [super tearDown];
+}
+
+
+#pragma mark - Safe Object Checks Tests
 
 /**
  *  Unit tests for EBSSafeObjects isSafeObject: class method.
@@ -121,6 +156,12 @@
    XCTAssertFalse([EBSSafeObjects isSafeObject:self.nullArray], @"Safe object test with null array failed.");
    XCTAssertTrue([EBSSafeObjects isSafeObject:self.emptyArray], @"Safe object test with empty array failed.");
    XCTAssertTrue([EBSSafeObjects isSafeObject:self.realArray], @"Safe object test with real array failed.");
+   
+   // Dates
+   XCTAssertFalse([EBSSafeObjects isSafeObject:self.nilDate], @"Safe object test with nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isSafeObject:self.nullDate], @"Safe object test with null date failed.");
+   XCTAssertTrue([EBSSafeObjects isSafeObject:self.emptyDate], @"Safe object test with empty date failed.");
+   XCTAssertTrue([EBSSafeObjects isSafeObject:self.realDate], @"Safe object test with real date failed.");
    
    // Dictionaries
    XCTAssertFalse([EBSSafeObjects isSafeObject:self.nilDictionary], @"Safe object test with nil dictionary failed.");
@@ -159,6 +200,12 @@
    XCTAssertTrue([EBSSafeObjects isObject:self.emptyArray safeKindOfClass:[NSArray class]], @"Safe kind of array class test with empty array failed.");
    XCTAssertTrue([EBSSafeObjects isObject:self.realArray safeKindOfClass:[NSArray class]], @"Safe kind of array class test with real array failed.");
    
+   // Dates
+   XCTAssertFalse([EBSSafeObjects isObject:self.nilDate safeKindOfClass:[NSDate class]], @"Safe kind of date class test with nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isObject:self.nullDate safeKindOfClass:[NSDate class]], @"Safe kind of date class test with null date failed.");
+   XCTAssertTrue([EBSSafeObjects isObject:self.emptyDate safeKindOfClass:[NSDate class]], @"Safe kind of date class test with empty date failed.");
+   XCTAssertTrue([EBSSafeObjects isObject:self.realDate safeKindOfClass:[NSDate class]], @"Safe kind of date class test with real date failed.");
+   
    // Dictionaries
    XCTAssertFalse([EBSSafeObjects isObject:self.nilDictionary safeKindOfClass:[NSDictionary class]], @"Safe kind of dictionary class test with nil dictionary failed.");
    XCTAssertFalse([EBSSafeObjects isObject:self.nullDictionary safeKindOfClass:[NSDictionary class]], @"Safe kind of dictionary class test with null dictionary failed.");
@@ -195,6 +242,8 @@
 }
 
 
+#pragma mark - Non Empty Checks Tests
+
 /**
  *  Unit tests for EBSSafeObjects isSafeNonEmptyArray: class method.
  */
@@ -211,6 +260,25 @@
    XCTAssertFalse([EBSSafeObjects isSafeNonEmptyArray:self.nullDictionary], @"Safe non empty array test with null dictionary failed.");
    XCTAssertFalse([EBSSafeObjects isSafeNonEmptyArray:self.emptyDictionary], @"Safe non empty array test with empty dictionary failed.");
    XCTAssertFalse([EBSSafeObjects isSafeNonEmptyArray:self.realDictionary], @"Safe non empty array test with real dictionary failed.");
+}
+
+
+/**
+ *  Unit tests for EBSSafeObjects isSafeNonEmptyDate: class method.
+ */
+- (void)testIsSafeNonEmptyDate
+{
+   // Dates
+   XCTAssertFalse([EBSSafeObjects isSafeNonEmptyDate:self.nilDate], @"Safe non empty date test with nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isSafeNonEmptyDate:self.nullDate], @"Safe non empty date test with null date failed.");
+   XCTAssertTrue([EBSSafeObjects isSafeNonEmptyDate:self.emptyDate], @"Safe non empty date test with empty date failed.");  // empty dates are initialized to current date and time
+   XCTAssertTrue([EBSSafeObjects isSafeNonEmptyDate:self.realDate], @"Safe non empty date test with real date failed.");
+   
+   // Different class
+   XCTAssertFalse([EBSSafeObjects isSafeNonEmptyDate:self.nilString], @"Safe non empty date test with nil string failed.");
+   XCTAssertFalse([EBSSafeObjects isSafeNonEmptyDate:self.nullString], @"Safe non empty date test with null string failed.");
+   XCTAssertFalse([EBSSafeObjects isSafeNonEmptyDate:self.emptyString], @"Safe non empty date test with empty string failed.");
+   XCTAssertFalse([EBSSafeObjects isSafeNonEmptyDate:self.realString], @"Safe non empty date test with real string failed.");
 }
 
 
@@ -270,6 +338,8 @@
    XCTAssertFalse([EBSSafeObjects isSafeNonEmptyString:self.realNumber], @"Safe non empty string test with real number failed.");
 }
 
+
+#pragma mark - Equality Checks Tests
 
 /**
  *  Unit tests for EBSSafeObjects isArray:safeEqualToArray: class method.
@@ -335,6 +405,73 @@
    XCTAssertFalse([EBSSafeObjects isArray:self.realDictionary safeEqualToArray:self.nullArray], @"Safe equal arrays test with real dictionary and null array failed.");
    XCTAssertFalse([EBSSafeObjects isArray:self.realDictionary safeEqualToArray:self.emptyArray], @"Safe equal arrays test with real dictionary and empty array failed.");
    XCTAssertFalse([EBSSafeObjects isArray:self.realDictionary safeEqualToArray:self.realArray], @"Safe equal arrays test with real dictionary and real array failed.");
+}
+
+
+/**
+ *  Unit tests for EBSSafeObjects isDate:safeEqualToDate: class method.
+ */
+- (void)testIsDateSafeEqualToDate
+{
+   // Dates
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeEqualToDate:self.nilDate], @"Safe equal dates test with nil date and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeEqualToDate:self.nullDate], @"Safe equal dates test with nil date and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeEqualToDate:self.emptyDate], @"Safe equal dates test with nil date and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeEqualToDate:self.realDate], @"Safe equal dates test with nil date and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeEqualToDate:self.nilDate], @"Safe equal dates test with null date and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeEqualToDate:self.nullDate], @"Safe equal dates test with null date and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeEqualToDate:self.emptyDate], @"Safe equal dates test with null date and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeEqualToDate:self.realDate], @"Safe equal dates test with null date and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeEqualToDate:self.nilDate], @"Safe equal dates test with empty date and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeEqualToDate:self.nullDate], @"Safe equal dates test with empty date and null date failed.");
+   XCTAssertTrue([EBSSafeObjects isDate:self.emptyDate safeEqualToDate:self.emptyDate], @"Safe equal dates test with empty date and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeEqualToDate:self.realDate], @"Safe equal dates test with empty date and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.nilDate], @"Safe equal dates test with real date and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.nullDate], @"Safe equal dates test with real date and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.emptyDate], @"Safe equal dates test with real date and empty date failed.");
+   XCTAssertTrue([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.realDate], @"Safe equal dates test with real date and real date failed.");
+   
+   // Other real dates
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.anotherRealDifferentDate], @"Safe equal dates test with real date and another real different date failed.");
+   XCTAssertTrue([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.anotherRealEqualDate], @"Safe equal dates test with real date and another real equal date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.anotherRealDifferentDate safeEqualToDate:self.realDate], @"Safe equal dates test with another real different date and real date failed.");
+   XCTAssertTrue([EBSSafeObjects isDate:self.anotherRealEqualDate safeEqualToDate:self.realDate], @"Safe equal dates test with another real equal date and real date failed.");
+   
+   // Different classes
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeEqualToDate:self.nilString], @"Safe equal dates test with nil date and nil string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeEqualToDate:self.nullString], @"Safe equal dates test with nil date and null string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeEqualToDate:self.emptyString], @"Safe equal dates test with nil date and empty string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeEqualToDate:self.realString], @"Safe equal dates test with nil date and real string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeEqualToDate:self.nilString], @"Safe equal dates test with null date and nil string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeEqualToDate:self.nullString], @"Safe equal dates test with null date and null string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeEqualToDate:self.emptyString], @"Safe equal dates test with null date and empty string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeEqualToDate:self.realString], @"Safe equal dates test with null date and real string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeEqualToDate:self.nilString], @"Safe equal dates test with empty date and nil string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeEqualToDate:self.nullString], @"Safe equal dates test with empty date and null string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeEqualToDate:self.emptyString], @"Safe equal dates test with empty date and empty string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeEqualToDate:self.realString], @"Safe equal dates test with empty date and real string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.nilString], @"Safe equal dates test with real date and nil string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.nullString], @"Safe equal dates test with real date and null string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.emptyString], @"Safe equal dates test with real date and empty string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeEqualToDate:self.realString], @"Safe equal dates test with real date and real string failed.");
+   
+   // Different classes swapped
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilString safeEqualToDate:self.nilDate], @"Safe equal dates test with nil string and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilString safeEqualToDate:self.nullDate], @"Safe equal dates test with nil string and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilString safeEqualToDate:self.emptyDate], @"Safe equal dates test with nil string and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilString safeEqualToDate:self.realDate], @"Safe equal dates test with nil string and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullString safeEqualToDate:self.nilDate], @"Safe equal dates test with null string and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullString safeEqualToDate:self.nullDate], @"Safe equal dates test with null string and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullString safeEqualToDate:self.emptyDate], @"Safe equal dates test with null string and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullString safeEqualToDate:self.realDate], @"Safe equal dates test with null string and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyString safeEqualToDate:self.nilDate], @"Safe equal dates test with empty string and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyString safeEqualToDate:self.nullDate], @"Safe equal dates test with empty string and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyString safeEqualToDate:self.emptyDate], @"Safe equal dates test with empty string and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyString safeEqualToDate:self.realDate], @"Safe equal dates test with empty string and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realString safeEqualToDate:self.nilDate], @"Safe equal dates test with real string and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realString safeEqualToDate:self.nullDate], @"Safe equal dates test with real string and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realString safeEqualToDate:self.emptyDate], @"Safe equal dates test with real string and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realString safeEqualToDate:self.realDate], @"Safe equal dates test with real string and real date failed.");
 }
 
 
@@ -539,6 +676,8 @@
 }
 
 
+#pragma mark - Non Empty Equality Checks Tests
+
 /**
  *  Unit tests for EBSSafeObjects isArray:safeNonEmptyEqualToArray: class method.
  */
@@ -603,6 +742,73 @@
    XCTAssertFalse([EBSSafeObjects isArray:self.realDictionary safeNonEmptyEqualToArray:self.nullArray], @"Safe non empty equal arrays test with real dictionary and null array failed.");
    XCTAssertFalse([EBSSafeObjects isArray:self.realDictionary safeNonEmptyEqualToArray:self.emptyArray], @"Safe non empty equal arrays test with real dictionary and empty array failed.");
    XCTAssertFalse([EBSSafeObjects isArray:self.realDictionary safeNonEmptyEqualToArray:self.realArray], @"Safe non empty equal arrays test with real dictionary and real array failed.");
+}
+
+
+/**
+ *  Unit tests for EBSSafeObjects isDate:safeNonEmptyEqualToDate: class method.
+ */
+- (void)testIsDateSafeNonEmptyEqualToDate
+{
+   // Dates
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeNonEmptyEqualToDate:self.nilDate], @"Safe non empty equal dates test with nil date and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeNonEmptyEqualToDate:self.nullDate], @"Safe non empty equal dates test with nil date and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeNonEmptyEqualToDate:self.emptyDate], @"Safe non empty equal dates test with nil date and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with nil date and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeNonEmptyEqualToDate:self.nilDate], @"Safe non empty equal dates test with null date and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeNonEmptyEqualToDate:self.nullDate], @"Safe non empty equal dates test with null date and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeNonEmptyEqualToDate:self.emptyDate], @"Safe non empty equal dates test with null date and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with null date and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeNonEmptyEqualToDate:self.nilDate], @"Safe non empty equal dates test with empty date and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeNonEmptyEqualToDate:self.nullDate], @"Safe non empty equal dates test with empty date and null date failed.");
+   XCTAssertTrue([EBSSafeObjects isDate:self.emptyDate safeNonEmptyEqualToDate:self.emptyDate], @"Safe non empty equal dates test with empty date and empty date failed.");  // empty dates are initialized to current date and time
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with empty date and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.nilDate], @"Safe non empty equal dates test with real date and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.nullDate], @"Safe non empty equal dates test with real date and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.emptyDate], @"Safe non empty equal dates test with real date and empty date failed.");
+   XCTAssertTrue([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with real date and real date failed.");
+   
+   // Other real dates
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.anotherRealDifferentDate], @"Safe non empty equal dates test with real date and another real different date failed.");
+   XCTAssertTrue([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.anotherRealEqualDate], @"Safe non empty equal dates test with real date and another real equal date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.anotherRealDifferentDate safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with another real different date and real date failed.");
+   XCTAssertTrue([EBSSafeObjects isDate:self.anotherRealEqualDate safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with another real equal date and real date failed.");
+   
+   // Different classes
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeNonEmptyEqualToDate:self.nilString], @"Safe non empty equal dates test with nil date and nil string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeNonEmptyEqualToDate:self.nullString], @"Safe non empty equal dates test with nil date and null string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeNonEmptyEqualToDate:self.emptyString], @"Safe non empty equal dates test with nil date and empty string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilDate safeNonEmptyEqualToDate:self.realString], @"Safe non empty equal dates test with nil date and real string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeNonEmptyEqualToDate:self.nilString], @"Safe non empty equal dates test with null date and nil string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeNonEmptyEqualToDate:self.nullString], @"Safe non empty equal dates test with null date and null string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeNonEmptyEqualToDate:self.emptyString], @"Safe non empty equal dates test with null date and empty string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullDate safeNonEmptyEqualToDate:self.realString], @"Safe non empty equal dates test with null date and real string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeNonEmptyEqualToDate:self.nilString], @"Safe non empty equal dates test with empty date and nil string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeNonEmptyEqualToDate:self.nullString], @"Safe non empty equal dates test with empty date and null string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeNonEmptyEqualToDate:self.emptyString], @"Safe non empty equal dates test with empty date and empty string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyDate safeNonEmptyEqualToDate:self.realString], @"Safe non empty equal dates test with empty date and real string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.nilString], @"Safe non empty equal dates test with real date and nil string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.nullString], @"Safe non empty equal dates test with real date and null string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.emptyString], @"Safe non empty equal dates test with real date and empty string failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realDate safeNonEmptyEqualToDate:self.realString], @"Safe non empty equal dates test with real date and real string failed.");
+   
+   // Different classes swapped
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilString safeNonEmptyEqualToDate:self.nilDate], @"Safe non empty equal dates test with nil string and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilString safeNonEmptyEqualToDate:self.nullDate], @"Safe non empty equal dates test with nil string and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilString safeNonEmptyEqualToDate:self.emptyDate], @"Safe non empty equal dates test with nil string and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nilString safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with nil string and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullString safeNonEmptyEqualToDate:self.nilDate], @"Safe non empty equal dates test with null string and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullString safeNonEmptyEqualToDate:self.nullDate], @"Safe non empty equal dates test with null string and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullString safeNonEmptyEqualToDate:self.emptyDate], @"Safe non empty equal dates test with null string and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.nullString safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with null string and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyString safeNonEmptyEqualToDate:self.nilDate], @"Safe non empty equal dates test with empty string and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyString safeNonEmptyEqualToDate:self.nullDate], @"Safe non empty equal dates test with empty string and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyString safeNonEmptyEqualToDate:self.emptyDate], @"Safe non empty equal dates test with empty string and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.emptyString safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with empty string and real date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realString safeNonEmptyEqualToDate:self.nilDate], @"Safe non empty equal dates test with real string and nil date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realString safeNonEmptyEqualToDate:self.nullDate], @"Safe non empty equal dates test with real string and null date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realString safeNonEmptyEqualToDate:self.emptyDate], @"Safe non empty equal dates test with real string and empty date failed.");
+   XCTAssertFalse([EBSSafeObjects isDate:self.realString safeNonEmptyEqualToDate:self.realDate], @"Safe non empty equal dates test with real string and real date failed.");
 }
 
 
