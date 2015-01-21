@@ -1,9 +1,13 @@
 # EBSSafeObjects
 Sample Objective-C library for using common Foundation objects that may not be safe, such as nil, null, or empty values obtained from a server API.
 
+Unit tests are implemented for each library method.
+
+The included demonstration application provides examples of how to utilize the library in retrieving stock information from a server.
+
 Although this library is useful on its own, the primary purpose for this project is to demonstrate unit testing techniques.
 
-# Methods
+## Library Class Methods
 ### Safe Object Checks
 ```
 + (BOOL)isSafeObject:(id)object
