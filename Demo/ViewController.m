@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (assign, nonatomic) BOOL showStatus;
 @property (strong, nonatomic) NSDateFormatter *inputDateFormatter;
 @property (strong, nonatomic) NSDateFormatter *outputDateFormatter;
 @property (strong, nonatomic) NSDictionary *sampleDictionary;
@@ -32,6 +34,8 @@
 {
    [super viewDidLoad];
    
+   self.statusLabel.hidden = YES;
+   
    // Set up date formatters
    self.inputDateFormatter = [[NSDateFormatter alloc] init];
    self.inputDateFormatter.dateFormat = @"EEE MMM dd HH:mm:ss Z yyyy";
@@ -40,7 +44,7 @@
    
    // Set up sample JSON dictionary
    NSMutableDictionary *sampleDataDictionary = [NSMutableDictionary dictionary];
-   sampleDataDictionary[@"Status"] = @"SUCCESS";
+   sampleDataDictionary[@"Status"] = @"SAMPLE";
    sampleDataDictionary[@"Name"] = @"Apple Inc";
    sampleDataDictionary[@"Symbol"] = @"AAPL";
    // sampleDataDictionary[@"Symbol"] = [NSNull null];
@@ -105,6 +109,7 @@
    self.nameLabel.text = stockInfo[@"Name"];
    self.priceLabel.text = stockInfo[@"LastPrice"];
    self.timeLabel.text = stockInfo[@"Timestamp"];
+   self.statusLabel.hidden = !self.showStatus;
 }
 
 
@@ -117,6 +122,9 @@
  */
 - (NSDictionary *)stockInfoForSymbol:(NSString *)symbol
 {
+   // TODO: Move network access to separate thread so as not to block the main thread
+   
+   [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
    NSError *error;
    NSURL *serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://dev.markitondemand.com/api/quote/json?symbol=%@", symbol]];
    NSData *serverData = [NSData dataWithContentsOfURL:serverURL];
@@ -134,6 +142,7 @@
       [alertController addAction:okAction];
       [self presentViewController:alertController animated:YES completion:nil];
    }
+   [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
    return serverDictionary;
 }
 
@@ -167,6 +176,7 @@
    } else {
       validatedStockInfo[@"Timestamp"] = @"unknown";
    }
+   self.showStatus = [EBSSafeObjects isString:stockInfo[@"Status"] safeNonEmptyEqualToString:@"SUCCESS"] ? YES : NO;
    return [NSDictionary dictionaryWithDictionary:validatedStockInfo];
 }
 
