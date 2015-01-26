@@ -75,24 +75,66 @@
 #pragma mark - Actions
 
 /**
- *  Retrieve and display JSON data from a server for AAPL stock.
- *
- *  @param sender The object that requested the action.
- */
-- (IBAction)loadServerDataButtonPressed:(UIButton *)sender
-{
-   [self displayStockInfo:[self validatedStockInfo:[self stockInfoForSymbol:@"AAPL"][@"Data"]]];
-}
-
-
-/**
- *  Retrieve and display sample JSON data.
+ *  Retrieve and display JSON sample data for AAPL stock when the Load Sample Data button is pressed.
  *
  *  @param sender The object that requested the action.
  */
 - (IBAction)loadSampleDataButtonPressed:(UIButton *)sender
 {
    [self displayStockInfo:[self validatedStockInfo:self.sampleDictionary[@"Data"]]];
+}
+
+
+/**
+ *  Retrieve and display JSON server data for AAPL stock when the Load Server Data button is pressed.
+ *
+ *  @param sender The object that requested the action.
+ */
+- (IBAction)loadServerDataButtonPressed:(UIButton *)sender
+{
+   // Retrieve stock information from the server
+   [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+   NSURL *serverURL = [NSURL URLWithString:@"http://dev.markitondemand.com/api/quote/json?symbol=AAPL"];
+   NSURLSession *serverSession = [NSURLSession sharedSession];
+   [[serverSession dataTaskWithURL:serverURL completionHandler:^(NSData *serverData, NSURLResponse *serverResponse, NSError *serverError) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+         NSString *errorMessage;
+         if (serverError) {
+            errorMessage = [serverError localizedDescription];
+         } else {
+            NSError *jsonError;
+            NSDictionary *serverDictionary = [NSJSONSerialization JSONObjectWithData:serverData options:NSJSONReadingAllowFragments error:&jsonError];
+            if (jsonError) {
+               errorMessage = [jsonError localizedDescription];
+            } else {
+               if ([EBSSafeObjects isSafeNonEmptyString:serverDictionary[@"Message"]]) {
+                  errorMessage = NSLocalizedString(serverDictionary[@"Message"], @"Server Message");
+               } else if (![EBSSafeObjects isString:serverDictionary[@"Data"][@"Status"] safeNonEmptyEqualToString:@"SUCCESS"]) {
+                  errorMessage = @"Did not retrieve a successful status from the server.";
+               } else {
+                  [self displayStockInfo:[self validatedStockInfo:serverDictionary[@"Data"]]];
+               }
+            }
+         }
+         
+         // Display and error message to the user if an error occurred
+         if (errorMessage) {
+            NSLog(@"ERROR: Could not retrieve stock information for AAPL.  %@", errorMessage);
+            UIAlertController *alertController = [UIAlertController
+                                                  alertControllerWithTitle:@"Error"
+                                                  message:NSLocalizedString(@"Could not retrieve stock information.  Please check your network connection and try again.", @"Network Error")
+                                                  preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"OK", @"OK")
+                                       style:UIAlertActionStyleDefault
+                                       handler:nil];
+            [alertController addAction:okAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+            [self displayStockInfo:[self validatedStockInfo:nil]];
+         }
+      });
+   }] resume];
 }
 
 
@@ -110,40 +152,6 @@
    self.priceLabel.text = stockInfo[@"LastPrice"];
    self.timeLabel.text = stockInfo[@"Timestamp"];
    self.statusLabel.hidden = !self.showStatus;
-}
-
-
-/**
- *  Retrieve stock information from the server.
- *
- *  @param symbol The stock symbol.
- *
- *  @return A JSON dictionary containing the retrieved stock information.
- */
-- (NSDictionary *)stockInfoForSymbol:(NSString *)symbol
-{
-   // TODO: Move network access to separate thread so as not to block the main thread
-   
-   [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-   NSError *error;
-   NSURL *serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://dev.markitondemand.com/api/quote/json?symbol=%@", symbol]];
-   NSData *serverData = [NSData dataWithContentsOfURL:serverURL];
-   NSDictionary *serverDictionary = [NSJSONSerialization JSONObjectWithData:serverData options:NSJSONReadingAllowFragments error:&error];
-   if (error) {
-      NSLog(@"ERROR: Could not retrieve stock information for %@.  %@", symbol, [error localizedDescription]);
-      UIAlertController *alertController = [UIAlertController
-                                            alertControllerWithTitle:@"Error"
-                                            message:NSLocalizedString(@"Could not retrieve stock information.  Please check your network connection and try again.", @"Network Error")
-                                            preferredStyle:UIAlertControllerStyleAlert];
-      UIAlertAction *okAction = [UIAlertAction
-                                 actionWithTitle:NSLocalizedString(@"OK", @"OK")
-                                 style:UIAlertActionStyleDefault
-                                 handler:nil];
-      [alertController addAction:okAction];
-      [self presentViewController:alertController animated:YES completion:nil];
-   }
-   [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-   return serverDictionary;
 }
 
 
